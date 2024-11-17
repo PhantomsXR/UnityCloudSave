@@ -88,13 +88,13 @@ namespace Unity.Services.CloudSave
             {
                 case k_StagingEnvironment:
 #if LOCATION_CHINA
-                    return "http://xgs-stg.phantomsxr.com";
+                    return "https://xgs-stg.phantomsxr.com";
 #else
                     return "https://cloud-save-stg.services.api.unity.com";
 #endif
                 default:
 #if LOCATION_CHINA
-                    return "http://xgs.phantomsxr.com";
+                    return "https://xgs.phantomsxr.com";
 #else
                     return "https://cloud-save.services.api.unity.com";
 #endif
