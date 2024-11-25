@@ -4,6 +4,7 @@ using Unity.Services.CloudSave.Internal;
 using Unity.Services.CloudSave.Internal.Apis.Data;
 using Unity.Services.CloudSave.Internal.Apis.Files;
 using Unity.Services.CloudSave.Internal.Http;
+using Unity.Services.Core;
 using Unity.Services.Core.Internal;
 using Unity.Services.Core.Device.Internal;
 using UnityEngine;
@@ -87,17 +88,13 @@ namespace Unity.Services.CloudSave
             switch (cloudEnvironment)
             {
                 case k_StagingEnvironment:
-#if LOCATION_CHINA
-                    return "https://xgs-stg.phantomsxr.com";
-#else
-                    return "https://cloud-save-stg.services.api.unity.com";
-#endif
+                    return CheckRegion.IsChina
+                        ? "https://xgs-stg.phantomsxr.com"
+                        : "https://cloud-save-stg.services.api.unity.com";
                 default:
-#if LOCATION_CHINA
-                    return "https://xgs.phantomsxr.com";
-#else
-                    return "https://cloud-save.services.api.unity.com";
-#endif
+                    return CheckRegion.IsChina
+                        ? "https://xgs-stg.phantomsxr.com"
+                        : "https://cloud-save.services.api.unity.com";
             }
         }
     }
