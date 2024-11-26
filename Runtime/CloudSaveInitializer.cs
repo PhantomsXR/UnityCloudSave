@@ -93,7 +93,7 @@ namespace Unity.Services.CloudSave
                         : "https://cloud-save-stg.services.api.unity.com";
                 default:
                     return CheckRegion.IsChina
-                        ? "https://xgs-stg.phantomsxr.com"
+                        ? "https://xgs.phantomsxr.com"
                         : "https://cloud-save.services.api.unity.com";
             }
         }
