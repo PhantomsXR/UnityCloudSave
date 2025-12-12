@@ -87,6 +87,7 @@ namespace Unity.Services.CloudSave
 
     public class SaveOptions : WriteLockOptions
     {
+        public System.Nullable<int> RequestTimeout { get; set; }
         public SaveOptions() {}
     }
 
@@ -134,7 +135,7 @@ namespace Unity.Services.CloudSave.Internal
     {
         public System.Threading.Tasks.Task DeleteAllAsync();
         public System.Threading.Tasks.Task DeleteAllAsync(Unity.Services.CloudSave.Models.Data.Player.DeleteAllOptions options);
-        public System.Threading.Tasks.Task DeleteAsync(string key, DeleteOptions deleteOptions = default(DeleteOptions));
+        [System.Obsolete(@"The interface provided by CloudSaveService.Instance.Data.Player.DeleteAsync(string key, Unity.Services.CloudSave.DeleteOptions deleteOptions) has been replaced by CloudSaveService.Instance.Data.Player.DeleteAsync(string key, Unity.Services.CloudSave.Models.Data.Player.DeleteOptions options), and should be accessed from there instead. This API will be removed in an upcoming release.", false)] public System.Threading.Tasks.Task DeleteAsync(string key, DeleteOptions deleteOptions = default(DeleteOptions));
         public System.Threading.Tasks.Task DeleteAsync(string key, Unity.Services.CloudSave.Models.Data.Player.DeleteOptions options);
         public System.Threading.Tasks.Task<System.Collections.Generic.List<Unity.Services.CloudSave.Models.ItemKey>> ListAllKeysAsync();
         public System.Threading.Tasks.Task<System.Collections.Generic.List<Unity.Services.CloudSave.Models.ItemKey>> ListAllKeysAsync(Unity.Services.CloudSave.Models.Data.Player.ListAllKeysOptions options);
@@ -272,7 +273,9 @@ namespace Unity.Services.CloudSave.Models
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"limit")] [UnityEngine.Scripting.Preserve] public int Limit { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"offset")] [UnityEngine.Scripting.Preserve] public int Offset { get; }
         [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"returnKeys")] [UnityEngine.Scripting.Preserve] public System.Collections.Generic.HashSet<string> ReturnKeys { get; }
+        [System.Runtime.Serialization.DataMember(EmitDefaultValue = false, Name = @"sampleSize")] [UnityEngine.Scripting.Preserve] public System.Nullable<int> SampleSize { get; }
         [UnityEngine.Scripting.Preserve] public Query(System.Collections.Generic.List<FieldFilter> fields, System.Collections.Generic.HashSet<string> returnKeys = default(System.Collections.Generic.HashSet<string>), int offset = 0, int limit = 0) {}
+        [UnityEngine.Scripting.Preserve] public Query(System.Collections.Generic.List<FieldFilter> fields, System.Collections.Generic.HashSet<string> returnKeys, int offset, int limit, System.Nullable<int> sampleSize) {}
     }
 
     public class SaveItem
@@ -393,5 +396,13 @@ namespace Unity.Services.CloudSave.Models.Data.Player
         public abstract AccessClass AccessClass { get; }
         public string PlayerId { get; }
         protected WriteAccessClassOptions() {}
+    }
+}
+
+namespace Unity.Services.Core
+{
+    public static class UnityServicesExtensions
+    {
+        public static Unity.Services.CloudSave.ICloudSaveService GetCloudSaveService(this IUnityServices unityServices);
     }
 }

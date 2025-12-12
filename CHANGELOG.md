@@ -4,11 +4,19 @@ All notable changes to this package will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [3.4.0] - 2025-11-20
+### Added
+* An optional `RequestTimeout` parameter to `ServiceOptions`, which will be considered when uploading files for a player using the `SaveAsync` methods in the `FilesService`.
+
+### Fixed
+* Fixed bug with after value when retrieving all files for a player.
+
+## [3.3.0] - 2024-11-18
+
 ## [3.2.1] - 2024-11-15
 
 ### Changed
 *  Updated the minimum supported Editor version to 2021.3.
-*  Updated Apple Privacy Manifest
 
 ## [3.2.0] - 2024-04-03
 

@@ -16,6 +16,10 @@ namespace Unity.Services.CloudSave
     /// </summary>
     public class SaveOptions : WriteLockOptions
     {
+        /// <summary>
+        /// Request timeout in seconds for upload operations. If null, uses the default timeout.
+        /// </summary>
+        public int? RequestTimeout { get; set; }
     }
 
     /// <summary>

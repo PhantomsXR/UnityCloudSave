@@ -27,9 +27,9 @@ namespace Unity.Services.CloudSave.Internal
 
         Task<Response<SignedUrlResponse>> GetDownloadUrlAsync(string key);
 
-        Task<Response> UploadAsync(Stream stream, SignedUrlResponse uploadParams);
+        Task<Response> UploadAsync(Stream stream, SignedUrlResponse uploadParams, int? requestTimeout = null);
 
-        Task<Response> UploadAsync(byte[] bytes, SignedUrlResponse uploadParams);
+        Task<Response> UploadAsync(byte[] bytes, SignedUrlResponse uploadParams, int? requestTimeout = null);
 
         Task<Response<MemoryStream>> DownloadStreamAsync(SignedUrlResponse uploadParams);
 
@@ -139,18 +139,30 @@ namespace Unity.Services.CloudSave.Internal
             return await m_FilesClient.GetDownloadUrlAsync(request);
         }
 
-        public async Task<Response> UploadAsync(Stream stream, SignedUrlResponse uploadParams)
+        public async Task<Response> UploadAsync(Stream stream, SignedUrlResponse uploadParams, int? requestTimeout = null)
         {
             ValidateRequiredDependencies();
 
-            return await m_FilesClient.UploadFileAsync(stream, uploadParams);
+            Unity.Services.CloudSave.Internal.Configuration config = null;
+            if (requestTimeout.HasValue)
+            {
+                config = new Unity.Services.CloudSave.Internal.Configuration(null, requestTimeout, null, null);
+            }
+
+            return await m_FilesClient.UploadFileAsync(stream, uploadParams, config);
         }
 
-        public async Task<Response> UploadAsync(byte[] bytes, SignedUrlResponse uploadParams)
+        public async Task<Response> UploadAsync(byte[] bytes, SignedUrlResponse uploadParams, int? requestTimeout = null)
         {
             ValidateRequiredDependencies();
 
-            return await m_FilesClient.UploadFileAsync(bytes, uploadParams);
+            Unity.Services.CloudSave.Internal.Configuration config = null;
+            if (requestTimeout.HasValue)
+            {
+                config = new Unity.Services.CloudSave.Internal.Configuration(null, requestTimeout, null, null);
+            }
+
+            return await m_FilesClient.UploadFileAsync(bytes, uploadParams, config);
         }
 
         public async Task<Response<MemoryStream>> DownloadStreamAsync(SignedUrlResponse downloadParams)

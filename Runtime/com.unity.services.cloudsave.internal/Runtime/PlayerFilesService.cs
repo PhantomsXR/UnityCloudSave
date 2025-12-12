@@ -130,7 +130,7 @@ namespace Unity.Services.CloudSave.Internal
                     if (items.Count > 0)
                     {
                         returnSet.AddRange(items);
-                        lastAddedKey = response.Result.Links.Next;
+                        lastAddedKey = response.Result.Links.Next?.Split("after=")[1];
                     }
                 }
                 while (!string.IsNullOrEmpty(response.Result.Links.Next));
@@ -153,7 +153,7 @@ namespace Unity.Services.CloudSave.Internal
             await m_ErrorHandler.RunWithErrorHandling(async() =>
             {
                 var uploadUrlResponse = await m_PlayerFilesApiClient.GetUploadUrlAsync(key, stream, options?.WriteLock);
-                await m_PlayerFilesApiClient.UploadAsync(stream, uploadUrlResponse.Result);
+                await m_PlayerFilesApiClient.UploadAsync(stream, uploadUrlResponse.Result, options?.RequestTimeout);
             });
         }
 
@@ -162,7 +162,7 @@ namespace Unity.Services.CloudSave.Internal
             await m_ErrorHandler.RunWithErrorHandling(async() =>
             {
                 var uploadUrlResponse = await m_PlayerFilesApiClient.GetUploadUrlAsync(key, bytes, options?.WriteLock);
-                await m_PlayerFilesApiClient.UploadAsync(bytes, uploadUrlResponse.Result);
+                await m_PlayerFilesApiClient.UploadAsync(bytes, uploadUrlResponse.Result, options?.RequestTimeout);
             });
         }
 
